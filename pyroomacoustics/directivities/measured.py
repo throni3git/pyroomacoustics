@@ -199,6 +199,7 @@ class MeasuredDirectivity(Directivity):
             base_frequency=constants.get("octave_bands_base_freq"),
             fs=self.fs,
             n_fft=constants.get("octave_bands_n_fft"),
+            third=self.use_third_octave_bands,
         )
 
         # Energies per direction and octave band, shape == (n_grid, n_bands).

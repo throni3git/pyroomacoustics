@@ -2829,6 +2829,7 @@ class ShoeBox(Room):
         use_rand_ism=False,
         max_rand_disp=0.08,
         min_phase=False,
+        use_third_octave_filterbank=False,
     ):
         p = np.array(p, dtype=np.float32)
 
@@ -2853,6 +2854,7 @@ class ShoeBox(Room):
             use_rand_ism,
             max_rand_disp,
             min_phase,
+            use_third_octave_filterbank,
         )
 
         # Keep the correctly ordered naming of walls

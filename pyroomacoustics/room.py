@@ -1221,6 +1221,7 @@ class Room(object):
         sources=None,
         mics=None,
         materials=None,
+        use_third_octave_bands=False,
         **kwargs,
     ):
         """
@@ -1289,6 +1290,7 @@ class Room(object):
             n_fft=constants.get("octave_bands_n_fft"),
             # keep_dc=constants.get("octave_bands_keep_dc"),
             base_frequency=constants.get("octave_bands_base_freq"),
+            third=use_third_octave_bands,
         )
         if not Material.all_flat(materials):
             for mat in materials:

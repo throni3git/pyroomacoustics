@@ -633,6 +633,12 @@ class AntoniOctaveFilterBank(BaseOctaveFilterBank):
         k2[-1] = n_fft // 2 + 1
 
         diff = k2 - k1
+
+        if np.any(diff == 0):
+            raise ValueError(
+                "n_fft is too small, the quantized bandwith calculation fails"
+            )
+
         ratio = diff / diff.sum()
         return ratio * self.fs / 2.0
 

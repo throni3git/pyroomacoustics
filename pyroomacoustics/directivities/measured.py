@@ -149,7 +149,14 @@ class MeasuredDirectivity(Directivity):
         The sampling frequency of the impulse responses
     """
 
-    def __init__(self, orientation, grid, impulse_responses, fs):
+    def __init__(
+        self,
+        orientation,
+        grid,
+        impulse_responses,
+        fs,
+        use_third_octave_bands=False,
+    ):
         if not isinstance(orientation, Rotation3D):
             raise ValueError("Orientation must be a Rotation3D object")
 
@@ -159,6 +166,7 @@ class MeasuredDirectivity(Directivity):
         self._original_grid = grid
         self._irs = impulse_responses
         self.fs = fs
+        self.use_third_octave_bands = use_third_octave_bands
 
         self._compute_band_energies()
 
@@ -531,7 +539,12 @@ class MeasuredDirectivityFile:
 
         return pos
 
-    def get_mic_directivity(self, measurement_id, orientation):
+    def get_mic_directivity(
+        self,
+        measurement_id,
+        orientation,
+        use_third_octave_bands=False,
+    ):
         """
         Get a directivity for a microphone
 
@@ -554,10 +567,21 @@ class MeasuredDirectivityFile:
         # interpolate the IR
         grid, ir = self._interpolate("mic", mid, src_grid, ir)
 
-        dir_obj = MeasuredDirectivity(orientation, grid, ir, self.fs)
+        dir_obj = MeasuredDirectivity(
+            orientation,
+            grid,
+            ir,
+            self.fs,
+            use_third_octave_bands,
+        )
         return dir_obj
 
-    def get_source_directivity(self, measurement_id, orientation):
+    def get_source_directivity(
+        self,
+        measurement_id,
+        orientation,
+        use_third_octave_bands=False,
+    ):
         """
         Get a directivity for a source
 
@@ -583,5 +607,11 @@ class MeasuredDirectivityFile:
         # interpolate the IR
         grid, ir = self._interpolate("source", mid, mic_grid, ir)
 
-        dir_obj = MeasuredDirectivity(orientation, grid, ir, self.fs)
+        dir_obj = MeasuredDirectivity(
+            orientation,
+            grid,
+            ir,
+            self.fs,
+            use_third_octave_bands,
+        )
         return dir_obj

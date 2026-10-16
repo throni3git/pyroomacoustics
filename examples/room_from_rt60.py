@@ -23,7 +23,7 @@ if __name__ == "__main__":
         "--method",
         "-m",
         choices=methods,
-        default=methods[0],
+        default=methods[1],
         help="Simulation method to use",
     )
     args = parser.parse_args()
@@ -54,10 +54,32 @@ if __name__ == "__main__":
             use_third_octave_filterbank=True,
         )
     elif args.method == "hybrid":
+        test_material = pra.Material(
+            energy_absorption={
+                "coeffs": [0.20, 0.20, 0.24, 0.25, 0.1, 0.9, 0.1, 0.9, 0.1, 0.9],
+                "center_freqs": [
+                    125,
+                    250,
+                    500,
+                    1000,
+                    2000,
+                    4000,
+                    5039,
+                    6349,
+                    8000,
+                    16000,
+                ],
+            },
+            scattering={
+                "coeffs": [0.3, 0.5, 0.6, 0.6, 0.7, 0.7, 0.7],
+                "center_freqs": [125, 250, 500, 1000, 2000, 4000, 8000],
+            },
+        )
+
         room = pra.ShoeBox(
             room_dim,
             fs=fs,
-            materials=pra.Material(e_absorption),
+            materials=test_material,
             max_order=3,
             ray_tracing=True,
             air_absorption=True,

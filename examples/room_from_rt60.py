@@ -102,6 +102,11 @@ if __name__ == "__main__":
     # Run the simulation (this will also build the RIR automatically)
     room.simulate()
 
+    # export RIR (normalized)
+    the_rir = room.rir[0][0].copy()
+    the_rir /= np.max(np.abs(the_rir))
+    wavfile.write(f"examples/samples/ir_{args.method}.wav", fs, the_rir)
+
     room.mic_array.to_wav(
         f"examples/samples/guitar_16k_reverb_{args.method}.wav",
         norm=True,

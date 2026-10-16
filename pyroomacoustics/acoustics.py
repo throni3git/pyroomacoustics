@@ -395,7 +395,13 @@ class OctaveBandsFactory(BaseOctaveFilterBank):
     """
 
     def __init__(
-        self, base_frequency=125.0, fs=16000, n_fft=512, keep_dc=False, min_phase=False
+        self,
+        base_frequency=125.0,
+        fs=16000,
+        n_fft=512,
+        keep_dc=False,
+        min_phase=False,
+        use_third_octave_bands=False,
     ):
         self.base_freq = base_frequency
         self.fs = fs
@@ -407,7 +413,9 @@ class OctaveBandsFactory(BaseOctaveFilterBank):
         self.n_bands = math.floor(np.log2(fs / base_frequency))
 
         self.bands, self.centers = octave_bands(
-            fc=self.base_freq, n=self.n_bands, third=False
+            fc=self.base_freq,
+            n=self.n_bands,
+            third=use_third_octave_bands,
         )
 
         self.filters, self.magnitude_response = self._make_filters()

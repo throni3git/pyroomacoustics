@@ -40,6 +40,7 @@ if __name__ == "__main__":
     e_absorption, max_order = pra.inverse_sabine(rt60_tgt, room_dim)
 
     pra.constants.set("octave_bands_keep_dc", True)
+    pra.constants.set("octave_bands_n_fft", 1024)
 
     # Create the room
     if args.method == "ism":
@@ -50,6 +51,7 @@ if __name__ == "__main__":
             max_order=max_order,
             use_rand_ism=True,
             air_absorption=True,
+            use_third_octave_filterbank=True,
         )
     elif args.method == "hybrid":
         room = pra.ShoeBox(
@@ -59,6 +61,7 @@ if __name__ == "__main__":
             max_order=3,
             ray_tracing=True,
             air_absorption=True,
+            use_third_octave_filterbank=True,
         )
 
     # place the source in the room

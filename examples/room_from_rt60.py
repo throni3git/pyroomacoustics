@@ -64,9 +64,30 @@ if __name__ == "__main__":
             use_third_octave_filterbank=True,
         )
 
+    dtf_sofa = pra.MeasuredDirectivityFile(
+        "LSPs_HATS_GuitarCabinets_Akustikmessplatz", fs=fs
+    )
+    rotation_data = pra.Rotation3D([0, 0], "yz", degrees=True)
+    directivity_loudspeaker = dtf_sofa.get_source_directivity(
+        "Palmer_1x12inch",
+        # "Genelec_8020",
+        orientation=rotation_data,
+        use_third_octave_bands=True,
+    )
+
     # place the source in the room
-    room.add_source([2.5, 3.73, 1.76], signal=audio, delay=0.5)
-    room.add_source([2.5, 4.73, 1.76], signal=audio, delay=0.5)
+    room.add_source(
+        [2.5, 3.73, 1.76],
+        signal=audio,
+        delay=0.5,
+        directivity=directivity_loudspeaker,
+    )
+    room.add_source(
+        [2.5, 4.73, 1.76],
+        signal=audio,
+        delay=0.5,
+        directivity=directivity_loudspeaker,
+    )
 
     # define the locations of the microphones
     mic_locs = np.c_[

@@ -33,7 +33,6 @@ from scipy.signal import chirp
 import pyroomacoustics as pra
 
 if __name__ == "__main__":
-
     # Test unit energy.
     fs = 16000
     n_fft = 2**10  # 1024
@@ -45,6 +44,7 @@ if __name__ == "__main__":
         n_fft=n_fft,
         keep_dc=True,
         base_frequency=base_freq,
+        use_third_octave_bands=True,
     )
 
     # The orthogonal-like filterbankd with perfect reconstruction and energy
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         band_overlap_ratio=0.5,
         slope=0,
         n_fft=n_fft,
-        third=False,
+        third=True,
     )
 
     fig, axes = plt.subplots(2, 2, figsize=(10, 5))

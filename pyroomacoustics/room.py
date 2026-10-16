@@ -882,6 +882,7 @@ class Room(object):
         use_rand_ism=False,
         max_rand_disp=0.08,
         min_phase=False,
+        use_third_octave_filterbank=False,
     ):
         self.walls = walls
 
@@ -904,6 +905,7 @@ class Room(object):
             use_rand_ism,
             max_rand_disp,
             min_phase,
+            use_third_octave_filterbank,
         )
 
         # initialize the C++ room engine
@@ -934,6 +936,7 @@ class Room(object):
         use_rand_ism,
         max_rand_disp,
         min_phase,
+        use_third_octave_filterbank,
     ):
         self.fs = fs
 
@@ -952,6 +955,7 @@ class Room(object):
             # keep_dc=constants.get("octave_bands_keep_dc"),
             base_frequency=constants.get("octave_bands_base_freq"),
             slope=0,
+            third=use_third_octave_filterbank,
         )
         self.max_rand_disp = max_rand_disp
 
